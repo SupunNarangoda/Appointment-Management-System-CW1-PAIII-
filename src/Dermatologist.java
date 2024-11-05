@@ -1,11 +1,11 @@
 import java.util.*;
 
-public class Dermatalogist {
+public class Dermatologist {
     String Name;
     private final Map<String, List<String>> schedule;
 
 
-    public Dermatalogist(String Name, Map<String, List<String>> schedule){
+    public Dermatologist(String Name, Map<String, List<String>> schedule){
         this.Name = Name;
         this.schedule = schedule;
     }

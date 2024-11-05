@@ -29,8 +29,8 @@ public class Appointment {
 
     }
 
-    static Dermatalogist DermatalogistA = new Dermatalogist("jhon",initializeSchedule());
-    static Dermatalogist DermatalogistB = new Dermatalogist("david",initializeSchedule());
+    static Dermatologist DermatalogistA = new Dermatologist("jhon",initializeSchedule());
+    static Dermatologist DermatalogistB = new Dermatologist("david",initializeSchedule());
 
     private static Map<String, List<String>> initializeSchedule() {
         Map<String, List<String>> schedule = new HashMap<>();
