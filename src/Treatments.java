@@ -9,10 +9,11 @@ public class Treatments {
     }};
 
 
-    public HashMap<String, Double> getTreatmentPrices(){
+    public HashMap<String, Double> getTreatmentPrices() {
         return treatmentPrices;
     }
-    public String listAndGetTreatment(){
+
+    public String listAndGetTreatment() {
         int i = 1;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Available treatments:");
@@ -22,9 +23,20 @@ public class Treatments {
             i++;
         }
         List<String> treatmentList = new ArrayList<>(treatmentPrices.keySet());
-        System.out.print("Select the required option by entering the specific number: ");
-        int option = scanner.nextInt();
+
+        int option = 0;
+        while (option < 1 || option > 4) { // Loop  if a number out of the range is entered
+            System.out.print("Select the required option by entering a number: ");
+            if (scanner.hasNextInt()) { // Check if the input is an integer
+                option = scanner.nextInt();
+                if (option < 1 || option > 4) {
+                    System.out.println("Please enter a number between 1 and 4.");
+                }
+            } else {
+                System.out.println("Please enter a valid integer.");
+                scanner.next();
+            }
+        }
         return treatmentList.get(option - 1);
     }
-
-}
+    }

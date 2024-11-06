@@ -16,33 +16,54 @@ public class Patient {
 
     }
     public static Patient createPatient(){ //creates the patient instance
-        try {
+        String NIC = null;
+        while (NIC == null) {
             System.out.print("Enter Patient NIC: ");
-            String NIC = validateInput(sc.nextLine().trim());
-
-            System.out.print("Enter Patient Name: ");
-            String Name = validateInput(sc.nextLine().trim());
-
-            System.out.print("Enter Patient Email: ");
-            String Email = validateInput(sc.nextLine().trim());
-
-            System.out.print("Enter Patient Phone: ");
-            Integer TelNo = Integer.parseInt(validateInput(sc.nextLine().trim()));
-
-            return new Patient(NIC, Name, Email, TelNo);
-
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid phone number format. Please enter only digits.");
-            return createPatient(); // Retry on invalid phone number input
-
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage()); // Display the validation error message
-            return createPatient(); // Retry on invalid input
-
-        } catch (Exception e) {
-            System.out.println("An unexpected error occurred. Please try again.");
-            return createPatient(); // Retry on unexpected errors
+            try {
+                NIC = validateInput(sc.nextLine().trim());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
+
+        String Name = null;
+        while (Name == null) {
+            System.out.print("Enter Patient Name: ");
+            try {
+                Name = validateInput(sc.nextLine().trim());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        String Email = null;
+        while (Email == null) {
+            System.out.print("Enter Patient Email: ");
+            try {
+                Email = validateInput(sc.nextLine().trim());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        Integer TelNo = null;
+        while (TelNo == null) {
+            System.out.print("Enter Patient Phone (10 Digits): ");
+            try {
+                TelNo = Integer.parseInt(validateInput(sc.nextLine().trim()));
+                // Check if TelNo is a 10-digit number
+                if (TelNo.toString().length() != 10) {
+                    System.out.println("Phone number must be exactly 10 digits");
+                    TelNo = null;
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+
+            }
+        }
+
+        return new Patient(NIC, Name, Email, TelNo);
+
 
     }
     private static String validateInput(String input) {
