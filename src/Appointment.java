@@ -117,80 +117,89 @@ public class Appointment {
     public static void updateAppointmentDetails(){
         Appointment appointmentToUpdate = null;
         appointmentToUpdate = searchAppointmentfromName();
-        System.out.println("Which Parameter should be changed\n[1] Treatment Type\n[2] Dermatologist\n[3] Appointment Date\n[4] Appointment Time\nSelection: ");
-        int choice2ForMap = scanner.nextInt();
-        String choice2 = appointmentUpdate.get(choice2ForMap);
-
-        boolean Updated = false;
-        if(choice2.equalsIgnoreCase("treatment type")){
-            Treatments treatments = new Treatments();
-            // Assuming we have a way to update the treatment in the appointment or invoice
-            String newTreatment = null;
-            while (newTreatment == null) {
-                try {
-                    newTreatment = treatments.listAndGetTreatment();
-                    appointmentToUpdate.treatment = newTreatment;
-                    Updated = true;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+        int choice2ForMap = 0;
+        if(appointmentToUpdate != null) {
+            while (choice2ForMap < 1 || choice2ForMap > 4) {
+                System.out.print("Which Parameter should be changed\n[1] Treatment Type\n[2] Dermatologist\n[3] Appointment Date\n[4] Appointment Time\nSelection: ");
+//                System.out.print("Selection: ");
+                if (scanner.hasNextInt()) { // Check if the input is an integer
+                    choice2ForMap = scanner.nextInt();
+                    if (choice2ForMap < 1 || choice2ForMap > 4) {
+                        System.out.println("Please enter a number between 1 and 4.");
+                    }
+                } else {
+                    System.out.println("Please enter a valid integer.");
+                    scanner.next();
                 }
             }
-            System.out.println("Treatment updated to: " + newTreatment);
+            String choice2 = appointmentUpdate.get(choice2ForMap);
 
-        } else if (choice2.equalsIgnoreCase("Dermatologist")) {
-            scanner.nextLine();
-            String newDermatologist = null;
-            while (newDermatologist == null) {
-                System.out.print("Select a new Dermatologist (Jhon / David): ");
-                try {
-                    newDermatologist = validateInput(scanner.nextLine());
-                    appointmentToUpdate.Dermatologist = newDermatologist;
-                    Updated = true;
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
+            if (choice2.equalsIgnoreCase("treatment type")) {
+                Treatments treatments = new Treatments();
+                // Assuming we have a way to update the treatment in the appointment or invoice
+                String newTreatment = null;
+                while (newTreatment == null) {
+                    try {
+                        newTreatment = treatments.listAndGetTreatment();
+                        appointmentToUpdate.treatment = newTreatment;
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
-            }
-            System.out.println("Dermatologist updated to: " + newDermatologist);
+                System.out.println("Treatment updated to: " + newTreatment);
 
-        } else if (choice2.equalsIgnoreCase("Appointment Date")) {
-            scanner.nextLine();
-            String newDate = null;
-            while (newDate == null) {
-                System.out.print("Enter new appointment date (YYYY-MM-DD): ");
-                try {
-                    newDate = validateDateInput(scanner.nextLine());
-                    appointmentToUpdate.date = newDate;
-                    Updated = true;
-                } catch (DateTimeParseException e) {
-                    System.out.println("Invalid date format. Please enter in YYYY-MM-DD format.");
+            } else if (choice2.equalsIgnoreCase("Dermatologist")) {
+                scanner.nextLine();
+                String newDermatologist = null;
+                while (newDermatologist == null) {
+                    System.out.print("Select a new Dermatologist (Jhon / David): ");
+                    try {
+                        newDermatologist = validateInput(scanner.nextLine());
+                        appointmentToUpdate.Dermatologist = newDermatologist;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
-            }
-            System.out.println("Appointment date updated to: " + newDate);
+                System.out.println("Dermatologist updated to: " + newDermatologist);
 
-        } else if (choice2.equalsIgnoreCase("Appointment Time")) {
-            scanner.nextLine();
-            AvailableSlots(appointmentToUpdate.day,appointmentToUpdate.Dermatologist);
-            String newTime = null;
-            while (newTime == null) {
-                System.out.print("Enter new appointment time (HH:mm): ");
-                try {
-                    newTime = validateInput(scanner.nextLine());
-                    checkifAppointmentTimeAvailable(appointmentToUpdate.day, newTime, appointmentToUpdate.Dermatologist);
-                    appointmentToUpdate.Time = newTime;
-                    Updated = true;
-                } catch (IllegalArgumentException e) {
-                    System.out.println(e.getMessage());
+            } else if (choice2.equalsIgnoreCase("Appointment Date")) {
+                scanner.nextLine();
+                String newDate = null;
+                while (newDate == null) {
+                    System.out.print("Enter new appointment date (YYYY-MM-DD): ");
+                    try {
+                        newDate = validateDateInput(scanner.nextLine());
+                        appointmentToUpdate.date = newDate;
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date format. Please enter in YYYY-MM-DD format.");
+                    }
                 }
+                System.out.println("Appointment date updated to: " + newDate);
+
+            } else if (choice2.equalsIgnoreCase("Appointment Time")) {
+                scanner.nextLine();
+                AvailableSlots(appointmentToUpdate.day, appointmentToUpdate.Dermatologist);
+                String newTime = null;
+                while (newTime == null) {
+                    System.out.print("Enter new appointment time (HH:mm): ");
+                    try {
+                        newTime = validateInput(scanner.nextLine());
+                        checkifAppointmentTimeAvailable(appointmentToUpdate.day, newTime, appointmentToUpdate.Dermatologist);
+                        appointmentToUpdate.Time = newTime;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+                System.out.println("Appointment time updated to: " + newTime);
+
+            } else {
+                System.out.println("Invalid choice. No updates made.");
             }
-            System.out.println("Appointment time updated to: " + newTime);
 
-        } else {
-            System.out.println("Invalid choice. No updates made.");
-        }
+            // Print the updated appointment details only if an update was made
 
-        // Print the updated appointment details only if an update was made
-        if (Updated) {
             System.out.println("Appointment Updated\n" + appointmentToUpdate);
+
         }
 
     }

@@ -48,16 +48,16 @@ public class Patient {
 
         Integer TelNo = null;
         while (TelNo == null) {
-            System.out.print("Enter Patient Phone (10 Digits): ");
+            System.out.print("Enter Patient Phone (eg:0712345678): ");
             try {
                 TelNo = Integer.parseInt(validateInput(sc.nextLine().trim()));
                 // Check if TelNo is a 10-digit number
-                if (TelNo.toString().length() != 10) {
-                    System.out.println("Phone number must be exactly 10 digits");
+                if (TelNo.toString().length() != 9) {
+                    System.out.println("Phone number must be exactly 9 digits excluding the 0");
                     TelNo = null;
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Phone number must be exactly 9 digits excluding the 0");
 
             }
         }
