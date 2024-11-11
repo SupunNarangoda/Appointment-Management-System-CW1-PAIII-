@@ -9,7 +9,7 @@ public class Main {
         do {
             System.out.println("\n----- |Aurora Skin Care System| -----\n");
             System.out.println("[1]. Make an Appointment");
-            System.out.println("[2]. View Appointments by Day");
+            System.out.println("[2]. View Appointments by Date");
             System.out.println("[3]. Search Appointment by Patient Name");
             System.out.println("[4]. Search Appointment by ID");
             System.out.println("[5]. Generate Invoice");

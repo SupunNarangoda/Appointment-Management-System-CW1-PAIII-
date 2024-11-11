@@ -111,9 +111,6 @@ public class Appointment {
 
     }
 
-
-
-
     public static void updateAppointmentDetails(){
         Appointment appointmentToUpdate = null;
         appointmentToUpdate = searchAppointmentfromName();
